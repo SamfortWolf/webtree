@@ -9,7 +9,7 @@ public class TestRepo {
 
     public static final int MAX_ELEMENT = 10;
 
-    public Map getRoot() {         //Получем корень нашего дерева Это будет 10 элементов
+   /* public Map getRoot() {         //Получем корень нашего дерева Это будет 10 элементов
         Map result = new HashMap();
         for (int i = 1; i < MAX_ELEMENT; i++) {
             TreeElement node = null;
@@ -29,9 +29,12 @@ public class TestRepo {
             for (int i = 1; i < MAX_ELEMENT; i++) {
                 String newId = parentId + i;
                 TreeElement node = new TreeElement(newId, parentId, "Node " + newId, null, "file");
+                if (Integer.parseInt(node.getId())%3==0) {
+                    node.setChildren(true);
+                }
                 result.put(node.getId(), node);
             }
         return result;
-    }
+    }*/
 
 }

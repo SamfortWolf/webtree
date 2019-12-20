@@ -3,24 +3,24 @@ $(function () {
     $('#jstree').jstree({
         "core": {
             expand_selected_onload: false,
-            animation: 0,
+            animation: 250,
             check_callback: true,
             force_text: true,
             themes: {"stripes": true},
             data: {
                 type: 'get',
                 dataType: 'json',
-                'url': function (node) {
-                    var result = (node.id === '#') ? 'get?id=root' : 'get?id=' + node.id;
-                    return result;
+                url: function (node) {
+                    return (node.id === '#') ? 'get?id=root' : 'get?id=' + node.id;
                 }
             }
         },
         "types": {
             "#": {
-                "max_children": 1,
-                "max_depth": 4,
-                "valid_children": ["folder_closed", "folder_opened"],
+                "icon": "resources/images/icons/default_folder.png",
+                //"max_children": 1,
+                //"max_depth": 4,
+                "valid_children": ["folder_closed", "folder_opened", "file", "default"],
             },
             "folder_closed": {
                 "icon": "resources/images/icons/default_folder.png",

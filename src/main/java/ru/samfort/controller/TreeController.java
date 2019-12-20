@@ -1,25 +1,23 @@
 package ru.samfort.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ru.samfort.repository.TestRepo;
-import ru.samfort.util.ConverterJSON;
+import ru.samfort.model.TreeElement;
+import ru.samfort.service.TreeService;
+
+import java.util.List;
 
 @RestController
 public class TreeController {
 
-    TestRepo repo = new TestRepo();
+    @Autowired
+    private TreeService service;
 
     @GetMapping(value = "/get", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String getTreeElement(@RequestParam(value = "id") String id) throws JsonProcessingException {
-        System.out.println("id is " + id);
-        if (id.equals("root")) {
-            return ConverterJSON.toJSON_String(repo.getRoot());
-        } else {
-            return ConverterJSON.toJSON_String(repo.getById(id));
-        }
+    public List<TreeElement> getTreeElement(@RequestParam(value = "id") String parent_id) {
+        return service.getElements(parent_id);
     }
 }
