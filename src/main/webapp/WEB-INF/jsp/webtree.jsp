@@ -13,14 +13,23 @@
 <h3>Web File Tree</h3>
 <div class="row">
     <div class="col-md-4 col-sm-8 col-xs-8">
-        <button type="button" class="btn btn-success btn-sm" onclick="create_element();"><i
-                class="glyphicon glyphicon-asterisk"></i> Create
+        <button type="button" class="btn btn-success btn-sm" onclick="create_file();"><i
+                class="glyphicon glyphicon-asterisk"></i> Create File
+        </button>
+        <button type="button" class="btn btn-success btn-sm" onclick="create_folder();"><i
+                class="glyphicon glyphicon-asterisk"></i> Create Folder
         </button>
         <button type="button" class="btn btn-warning btn-sm" onclick="rename_element();"><i
                 class="glyphicon glyphicon-pencil"></i> Rename
         </button>
         <button type="button" class="btn btn-danger btn-sm" onclick="delete_element();"><i
                 class="glyphicon glyphicon-remove"></i> Delete
+        </button>
+        <button type="button" class="btn btn-info btn-sm" onclick="expand_all();"><i
+                class="glyphicon glyphicon-remove"></i> Expand All
+        </button>
+        <button type="button" class="btn btn-info btn-sm" onclick="collapse_all();"><i
+                class="glyphicon glyphicon-remove"></i> Collapse all
         </button>
     </div>
 </div>
