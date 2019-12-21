@@ -32,6 +32,12 @@ function rename_element() {
     }
     sel = sel[0];
     ref.edit(sel);
+    // var text = ref.get_node(sel);//!!! КОРРЕКТЫЙ ВИД ОБЪЕКТА!!!
+    // $.ajax({
+    //     type: 'post',
+    //     url: "/webtree/",
+    //     data: text,
+    // });
 }
 
 function delete_element() {
@@ -49,4 +55,39 @@ function expand_all() {
 
 function collapse_all() {
     $("#jstree").jstree("close_all");
+}
+
+function save_tree() {
+    var v = $('#jstree').jstree(true).get_json('#', {no_li_attr:true});
+    var mytext = JSON.stringify(v);
+
+
+        var categoriesArray = new Array();
+        var i = 0;
+        $('#jstree li').each(function () {
+
+            var id = $(this).attr('id').toString();
+            if (id.indexOf("j") >= 0) {
+                id = maxId + 1;
+                $(this).attr('id', id);
+                maxId = maxId + 1;
+            }
+
+            var text = $(this).find("a:first").text().trim();
+
+            if ($(this).parent('ul.jstree-children')) {
+                var parentId = $(this).parent('ul.jstree-children').parent('li').attr('id');
+                var category = { id: id, name: text, parent: parent}
+
+                categoriesArray.push(category);
+
+                i++;
+            }
+        });
+
+        $.ajax({
+            type: 'post',
+            url: "/webtree/",
+            data: mytext,
+        });
 }

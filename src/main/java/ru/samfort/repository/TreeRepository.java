@@ -6,10 +6,12 @@ import java.util.List;
 
 public interface TreeRepository {
 
-    List<TreeElement> getAllRoots ();
+    List<TreeElement> getAllByParent(String parent);
 
-    List<TreeElement> getAllByParentId (String parent_id);
+    void saveOrRename(TreeElement element);
 
-    List<TreeElement> getAllByParent (String parent);
+    TreeElement getOne(int nodeId);
+
+    void delete(int nodeId);
 
 }

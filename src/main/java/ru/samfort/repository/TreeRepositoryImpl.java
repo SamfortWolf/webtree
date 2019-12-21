@@ -7,8 +7,7 @@ import ru.samfort.model.TreeElement;
 import java.util.List;
 
 @Repository
-public class TreeRepositoryImpl implements TreeRepository{
-//    private static String rootSymbol = "#";
+public class TreeRepositoryImpl implements TreeRepository {
 
     private final CrudTreeRepository crudTreeRepository;
 
@@ -18,17 +17,24 @@ public class TreeRepositoryImpl implements TreeRepository{
     }
 
     @Override
-    public List<TreeElement> getAllRoots () {
-        return crudTreeRepository.getAllRoots("#");
+    public List<TreeElement> getAllByParent(String parent) {
+        return crudTreeRepository.getAllByParent(parent);
     }
 
     @Override
-    public List<TreeElement> getAllByParentId (String parent_id){
-        return crudTreeRepository.getAllByParentId(parent_id);
+    public void saveOrRename(TreeElement element) {
+        crudTreeRepository.save(element);
     }
+
     @Override
-    public List<TreeElement> getAllByParent (String parent){
-        return crudTreeRepository.getAllByParent(parent);
+    public TreeElement getOne(int nodeId) {
+        return crudTreeRepository.getOne(nodeId);
     }
+
+    @Override
+    public void delete(int nodeId) {
+        crudTreeRepository.delete(nodeId);
+    }
+
 
 }

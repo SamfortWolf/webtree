@@ -8,7 +8,7 @@ $(function () {
             force_text: true,
             themes: {"stripes": true},
             data: {
-                type: 'get',
+                type: 'GET',
                 dataType: 'json',
                 url: function (node) {
                     return (node.id === '#') ? 'get?id=root' : 'get?id=' + node.id;
@@ -18,8 +18,6 @@ $(function () {
         "types": {
             "#": {
                 "icon": "resources/images/icons/default_folder.png",
-                //"max_children": 1,
-                //"max_depth": 4,
                 "valid_children": ["folder_closed", "folder_opened", "file", "default"],
             },
             "folder_closed": {
@@ -39,7 +37,7 @@ $(function () {
             }
         },
         "plugins": [
-            "contextmenu", "dnd", "search",
+            "contextmenu", /*"dnd",*/ "search",
             "state", "types", "wholerow"
         ],
         "contextmenu": {//context menu actions
@@ -109,4 +107,29 @@ $(function () {
     $('#jstree').on("changed.jstree", function (e, data) {
         console.log(data.selected);
     });
+    //bind to update or create
+    $('#jstree').on('rename_node.jstree', function renameNode(nodeId, node) {
+        var actionUrl = "rename?nodeId=" + node.node.id + "&nodeNewTitle=" + node.node.text + "&type=" + node.node.type + "&parent=" + node.node.parent;
+        $.ajax({
+            type: "POST",
+            url: actionUrl
+        });
+    });
+    //bind to delete
+    $('#jstree').on('delete_node.jstree', function deleteNode(nodeId, node) {
+        var actionUrl = "delete?nodeId=" + node.node.id;
+        $.ajax({
+            type: "DELETE",
+            url: actionUrl
+        });
+    });
+    //bind to d'n'd
+    // $('#jstree').on('dnd.jstree', function dndNode(nodeId, node) {
+    //     var actionUrl = "dnd?newParent=" + node.node.parent;
+    //     $.ajax({
+    //         type: "UPDATE",
+    //         url: actionUrl
+    //     })
+    // });
+
 });

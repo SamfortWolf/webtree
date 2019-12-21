@@ -8,6 +8,8 @@ import javax.persistence.*;
 @Table(name = "elements")
 public class TreeElement {
     @Id
+    @SequenceGenerator(name = "global_seq", sequenceName = "global_seq", allocationSize = 1, initialValue = 100000)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "global_seq")
     @Column(name = "id")
     private Integer id;
     @Column(name = "parent")
@@ -19,10 +21,11 @@ public class TreeElement {
     @Column(name = "type")
     private String type;
 
-    public TreeElement(Integer id, String parent, String text) {
-        this.id = id;
+    public TreeElement(String parent, String text, String type, Boolean children) {
         this.parent = parent;
         this.text = text;
+        this.type = type;
+        this.children = children;
     }
 
     public TreeElement(Integer id, String parent, String text, Boolean children) {
