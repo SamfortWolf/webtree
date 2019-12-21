@@ -12,6 +12,6 @@ public interface TreeRepository {
 
     TreeElement getOne(int nodeId);
 
-    void delete(int nodeId);
+    void delete(int nodeId, String nodeIdAsString);
 
 }

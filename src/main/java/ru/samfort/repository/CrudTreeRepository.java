@@ -19,6 +19,6 @@ public interface CrudTreeRepository extends JpaRepository<TreeElement, String> {
 
     @Transactional
     @Modifying
-    @Query("DELETE FROM TreeElement n WHERE n.id=:nodeId")
-    void delete(@Param("nodeId") int nodeId);
+    @Query("DELETE FROM TreeElement n WHERE (n.id=:nodeId OR n.parent=:nodeIdAsString)")
+    void delete(@Param("nodeId") int nodeId, @Param("nodeIdAsString") String nodeIdAsString);
 }

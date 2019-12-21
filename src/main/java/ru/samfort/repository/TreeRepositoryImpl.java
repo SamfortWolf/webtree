@@ -32,8 +32,8 @@ public class TreeRepositoryImpl implements TreeRepository {
     }
 
     @Override
-    public void delete(int nodeId) {
-        crudTreeRepository.delete(nodeId);
+    public void delete(int nodeId, String nodeIdAsString) {
+        crudTreeRepository.delete(nodeId, nodeIdAsString);
     }
 
 

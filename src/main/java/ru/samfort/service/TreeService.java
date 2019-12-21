@@ -32,14 +32,15 @@ public class TreeService {
             element.setText(newName);
             treeRepository.saveOrRename(element);
         } else {
-            TreeElement newElement = new TreeElement(parent, newName, type, type.equals("file") ? false : true);
+            TreeElement newElement = new TreeElement(parent, newName, type, false );
             System.out.println("Saving new Node");
             treeRepository.saveOrRename(newElement);
         }
     }
 
     public void delete(int nodeId) {
-        treeRepository.delete(nodeId);
+        String nodeIdAsString = String.valueOf(nodeId);
+        treeRepository.delete(nodeId, nodeIdAsString);
     }
 
     private boolean isNumber(String str) {
