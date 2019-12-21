@@ -37,7 +37,7 @@ $(function () {
             }
         },
         "plugins": [
-            "contextmenu", /*"dnd",*/ "search",
+            "contextmenu", "dnd", "search",
             "state", "types", "wholerow"
         ],
         "contextmenu": {//context menu actions
@@ -108,13 +108,15 @@ $(function () {
         console.log(data.selected);
     });
     //bind to update or create
-    $('#jstree').on('rename_node.jstree', function renameNode(nodeId, node) {
+    $('#jstree').on('rename_node.jstree', function renameCreateNode(nodeId, node) {
         var actionUrl = "rename?nodeId=" + node.node.id + "&nodeNewTitle=" + node.node.text + "&type=" + node.node.type + "&parent=" + node.node.parent;
         $.ajax({
             type: "POST",
-            url: actionUrl
+            url: actionUrl,
+            success: function () {
+                $('#jstree').jstree(true).refresh_node(node.node.parent);
+            }
         });
-        $('#jstree').jstree(true).refresh_node(node.node.parent)
     });
     //bind to delete
     $('#jstree').on('delete_node.jstree', function deleteNode(nodeId, node) {
@@ -125,12 +127,11 @@ $(function () {
         });
     });
     //bind to d'n'd
-    // $('#jstree').on('dnd.jstree', function dndNode(nodeId, node) {
-    //     var actionUrl = "dnd?newParent=" + node.node.parent;
-    //     $.ajax({
-    //         type: "UPDATE",
-    //         url: actionUrl
-    //     })
-    // });
-
+    $('#jstree').on('move_node.jstree', function dndNode(nodeId, node) {
+        var actionUrl = "move?newParent=" + node.node.parent+"&nodeId="+node.node.id;
+        $.ajax({
+            type: "POST",
+            url: actionUrl
+        })
+    });
 });

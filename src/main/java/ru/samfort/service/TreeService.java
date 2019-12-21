@@ -33,7 +33,10 @@ public class TreeService {
             treeRepository.saveOrRename(element);
         } else {
             TreeElement newElement = new TreeElement(parent, newName, type, false );
+            TreeElement parentElement = treeRepository.getOne(Integer.parseInt(parent));
+            parentElement.setChildren(true);
             System.out.println("Saving new Node");
+            treeRepository.saveOrRename(parentElement);
             treeRepository.saveOrRename(newElement);
         }
     }
@@ -49,5 +52,14 @@ public class TreeService {
             if (!Character.isDigit(str.charAt(i))) return false;
         }
         return true;
+    }
+
+    public void move(String newParent, int nodeId) {
+        TreeElement element = treeRepository.getOne(nodeId);
+        element.setParent(newParent);
+        TreeElement parentElement = treeRepository.getOne(Integer.parseInt(newParent));
+        parentElement.setChildren(true);
+        treeRepository.saveOrRename(parentElement);
+        treeRepository.saveOrRename(element);
     }
 }

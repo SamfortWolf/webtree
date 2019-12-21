@@ -1,4 +1,5 @@
 DELETE FROM elements;
+ALTER SEQUENCE global_seq RESTART WITH 100000;
 
 INSERT INTO ELEMENTS (parent, text, children, type) VALUES
 
