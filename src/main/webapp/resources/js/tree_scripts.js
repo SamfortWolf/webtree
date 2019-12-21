@@ -114,6 +114,7 @@ $(function () {
             type: "POST",
             url: actionUrl
         });
+        $('#jstree').jstree(true).refresh_node(node.node.parent)
     });
     //bind to delete
     $('#jstree').on('delete_node.jstree', function deleteNode(nodeId, node) {
