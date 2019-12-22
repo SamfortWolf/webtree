@@ -15,7 +15,8 @@ public class TreeController {
     private TreeService service;
 
     @GetMapping(value = "/get", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<TreeElement> getTreeElement(@RequestParam(value = "id") String parent_id) {
+    public List<TreeElement> getTreeElement(@RequestParam(value = "id") String parent_id) throws InterruptedException {
+        Thread.sleep(2000);
         return service.getElements(parent_id);
     }
 
