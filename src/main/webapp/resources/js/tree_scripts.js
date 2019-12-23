@@ -92,20 +92,16 @@ $(function () {
                             ref.delete_node(sel);
                         }
                     }
-                };
+                }
             }
         }
     });
-    /* Toggle between folder open and folder closed */
+    // Toggle between folder open and folder closed
     $('#jstree').on('open_node.jstree', function (e, data) {
-        data.instance.set_icon(data.node, "resources/images/icons/opened_folder.png")
+        data.instance.set_icon(data.node, "resources/images/icons/opened_folder.png");
     });
     $('#jstree').on('close_node.jstree', function (e, data) {
-        data.instance.set_icon(data.node, "resources/images/icons/default_folder.png")
-    });
-    // bind to events triggered on the tree
-    $('#jstree').on("changed.jstree", function (e, data) {
-        console.log(data.selected);
+        data.instance.set_icon(data.node, "resources/images/icons/default_folder.png");
     });
     //bind to update or create
     $('#jstree').on('rename_node.jstree', function renameCreateNode(nodeId, node) {
@@ -132,6 +128,6 @@ $(function () {
         $.ajax({
             type: "POST",
             url: actionUrl
-        })
+        });
     });
 });

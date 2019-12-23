@@ -29,7 +29,7 @@ public class TreeController {
     }
 
     @DeleteMapping(value = "/delete")
-    public void deleteElement(@RequestParam(value = "nodeId") int id) { ;
+    public void deleteElement(@RequestParam(value = "nodeId") int id) {
         service.delete(id);
     }
 
