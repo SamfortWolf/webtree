@@ -1,11 +1,17 @@
 package ru.samfort.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.Database;
@@ -22,7 +28,11 @@ import java.util.Properties;
 @ComponentScan("ru.samfort.service")
 @ComponentScan("ru.samfort.repository")
 @EnableJpaRepositories(basePackages = "ru.samfort.repository")
+@PropertySource(value = "classpath:db/postgreDB.properties")
 public class AppConfig {
+
+    @Autowired
+    private Environment env;
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
@@ -42,10 +52,10 @@ public class AppConfig {
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource driver = new DriverManagerDataSource();
-        driver.setDriverClassName("org.postgresql.Driver");
-        driver.setUrl("jdbc:postgresql://localhost:5432/webtree");
-        driver.setUsername("postgres");
-        driver.setPassword("postgres");
+        driver.setDriverClassName(env.getProperty("spring.datasource.Driver"));
+        driver.setUrl(env.getProperty("spring.datasource.url"));
+        driver.setUsername(env.getProperty("spring.datasource.username"));
+        driver.setPassword(env.getProperty("spring.datasource.password"));
         return driver;
     }
 
@@ -64,8 +74,9 @@ public class AppConfig {
 
     private Properties additionalProperties() {
         Properties properties = new Properties();
-        properties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
-        properties.put("jpa.showSql", "true");
+        properties.setProperty("hibernate.dialect", env.getProperty("spring.jpa.properties.hibernate.dialect"));
+        properties.setProperty("jpa.showSql", env.getProperty("spring.jpa.showSql"));
+        properties.setProperty("jpa.hibernate.ddl-auto", env.getProperty("spring.jpa.hibernate.ddl-auto"));
         return properties;
     }
 }
